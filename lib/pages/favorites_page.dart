@@ -1,7 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+﻿import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../data/seed_data.dart';
 import '../utils/favorites_manager.dart';
@@ -39,225 +36,125 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              color: theme.scaffoldBackgroundColor.withValues(alpha: 0.7),
-            ),
-          ),
-        ),
-        title: Text(
-          'My Favorites',
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: AppBar(title: const Text('My Favorites')),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _favoriteCombos.isEmpty
-          ? _buildEmptyState(theme)
-          : _buildFavoritesList(theme, isDark),
-    );
-  }
-
-  Widget _buildEmptyState(ThemeData theme) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.favorite_border_rounded,
-            size: 80,
-            color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'No Favorites Yet',
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Start adding combos to your favorites\nto see them here',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFavoritesList(ThemeData theme, bool isDark) {
-    return AnimationLimiter(
-      child: ListView.builder(
-        padding: const EdgeInsets.only(
-          top: 100,
-          left: 20,
-          right: 20,
-          bottom: 20,
-        ),
-        itemCount: _favoriteCombos.length,
-        itemBuilder: (context, index) {
-          return AnimationConfiguration.staggeredList(
-            position: index,
-            duration: const Duration(milliseconds: 375),
-            child: SlideAnimation(
-              verticalOffset: 50.0,
-              child: FadeInAnimation(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: _FavoriteComboCard(
-                    combo: _favoriteCombos[index],
-                    isDark: isDark,
-                    onFavoriteToggle: () {
-                      setState(() {
-                        _favoriteIds.remove(_favoriteCombos[index].id);
-                      });
-                      FavoritesManager.removeFavorite(
-                        _favoriteCombos[index].id,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _FavoriteComboCard extends StatelessWidget {
-  final Combo combo;
-  final bool isDark;
-  final VoidCallback onFavoriteToggle;
-
-  const _FavoriteComboCard({
-    required this.combo,
-    required this.isDark,
-    required this.onFavoriteToggle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ComboDetailPage(combo: combo),
-          ),
-        );
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.white.withValues(alpha: 0.7),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: theme.colorScheme.primary.withValues(alpha: 0.2),
-                width: 1,
-              ),
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    gradient: LinearGradient(
-                      colors: [
-                        theme.colorScheme.primary.withValues(alpha: 0.2),
-                        theme.colorScheme.tertiary.withValues(alpha: 0.15),
-                      ],
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      combo.emoji,
-                      style: const TextStyle(fontSize: 36),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
+              ? Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Icon(Icons.favorite_border, size: 80, color: theme.textTheme.bodySmall?.color),
+                      const SizedBox(height: 24),
+                      Text('No Favorites Yet', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 12),
                       Text(
-                        combo.title,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${combo.base.name} + ${combo.top.name}',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: 0.6,
-                          ),
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: combo.season == Season.summer
-                              ? Colors.orange.withValues(alpha: 0.2)
-                              : Colors.blue.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          combo.season == Season.summer ? 'Summer' : 'Winter',
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                        'Start adding combos to your favorites\nto see them here',
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodyLarge,
                       ),
                     ],
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.favorite_rounded, color: Colors.red),
-                  onPressed: () {
-                    HapticFeedback.mediumImpact();
-                    onFavoriteToggle();
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: _favoriteCombos.length,
+                  itemBuilder: (context, index) {
+                    final combo = _favoriteCombos[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Material(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ComboDetailPage(combo: combo),
+                              ),
+                            );
+                            _loadFavorites();
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: theme.dividerColor, width: 1),
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(child: Text(combo.emoji, style: const TextStyle(fontSize: 30))),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        combo.title,
+                                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        '${combo.base.name} + ${combo.top.name}',
+                                        style: theme.textTheme.bodySmall,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                                          borderRadius: BorderRadius.circular(6),
+                                        ),
+                                        child: Text(
+                                          combo.season.name.toUpperCase(),
+                                          style: theme.textTheme.labelSmall?.copyWith(
+                                            color: theme.colorScheme.primary,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.favorite, color: Colors.red),
+                                  onPressed: () async {
+                                    await FavoritesManager.toggleFavorite(combo.id);
+                                    _loadFavorites();
+                                    if (mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Removed from favorites'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   },
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
