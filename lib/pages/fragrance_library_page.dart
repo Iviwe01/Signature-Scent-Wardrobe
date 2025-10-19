@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../models/models.dart';
 import '../data/seed_data.dart';
 import 'fragrance_detail_page.dart';
@@ -73,7 +74,7 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                 fillColor: theme.colorScheme.surface,
               ),
             ),
-          ),
+          ).animate().fadeIn(duration: 300.ms).slideY(begin: -0.1, end: 0),
           Container(
             height: 48,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -86,7 +87,7 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                 _buildCategoryChip(theme, 'Top'),
               ],
             ),
-          ),
+          ).animate().fadeIn(delay: 100.ms, duration: 300.ms),
           const SizedBox(height: 8),
           Expanded(
             child: _filteredFragrances.isEmpty
@@ -100,95 +101,94 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                       ],
                     ),
                   )
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                : GridView.builder(
+                    padding: const EdgeInsets.all(16),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.8,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
                     itemCount: _filteredFragrances.length,
                     itemBuilder: (context, index) {
                       final fragrance = _filteredFragrances[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Material(
-                          color: theme.colorScheme.surface,
-                          borderRadius: BorderRadius.circular(12),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FragranceDetailPage(fragrance: fragrance),
-                                ),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: theme.dividerColor, width: 1),
+                      return Material(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FragranceDetailPage(fragrance: fragrance),
                               ),
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: theme.colorScheme.primary.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        fragrance.name[0],
-                                        style: theme.textTheme.headlineSmall?.copyWith(
-                                          color: theme.colorScheme.primary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: theme.dividerColor, width: 1),
+                            ),
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      fragrance.name[0],
+                                      style: theme.textTheme.displaySmall?.copyWith(
+                                        color: theme.colorScheme.primary,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          fragrance.name,
-                                          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  fragrance.name,
+                                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(fragrance.brand, style: theme.textTheme.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                const Spacer(),
+                                Wrap(
+                                  spacing: 4,
+                                  runSpacing: 4,
+                                  children: fragrance.notes.take(2).map((note) {
+                                    return Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        note,
+                                        style: theme.textTheme.labelSmall?.copyWith(
+                                          color: theme.colorScheme.primary,
+                                          fontSize: 10,
                                         ),
-                                        const SizedBox(height: 4),
-                                        Text(fragrance.brand, style: theme.textTheme.bodySmall),
-                                        const SizedBox(height: 8),
-                                        Wrap(
-                                          spacing: 4,
-                                          runSpacing: 4,
-                                          children: fragrance.notes.take(3).map((note) {
-                                            return Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                              decoration: BoxDecoration(
-                                                color: theme.colorScheme.primary.withValues(alpha: 0.08),
-                                                borderRadius: BorderRadius.circular(4),
-                                              ),
-                                              child: Text(
-                                                note,
-                                                style: theme.textTheme.labelSmall?.copyWith(
-                                                  color: theme.colorScheme.primary,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Icon(Icons.chevron_right, color: theme.textTheme.bodySmall?.color),
-                                ],
-                              ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      );
+                      ).animate().fadeIn(
+                        delay: (50 * index).ms,
+                        duration: 400.ms,
+                      ).slideY(begin: 0.1, end: 0);
                     },
                   ),
           ),

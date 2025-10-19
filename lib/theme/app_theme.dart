@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Simplified professional color palette
@@ -25,7 +26,7 @@ class AppTheme {
         onSurface: textPrimary,
         onBackground: textPrimary,
       ),
-      textTheme: base.textTheme.copyWith(
+      textTheme: GoogleFonts.interTextTheme(base.textTheme).copyWith(
         displayLarge: const TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.w700,
@@ -253,7 +254,7 @@ class AppTheme {
         onSurface: darkTextPrimary,
         onBackground: darkTextPrimary,
       ),
-      textTheme: base.textTheme.copyWith(
+      textTheme: GoogleFonts.interTextTheme(base.textTheme).copyWith(
         displayLarge: const TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.w700,
