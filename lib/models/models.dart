@@ -116,29 +116,29 @@ class Fragrance {
   
   // Get a unique image URL based on fragrance characteristics
   String get imageUrl {
-    // Map fragrances to specific themed images from Unsplash
+    // Map fragrances to specific perfume bottle images from Unsplash
     if (name.contains('Vanilla')) {
-      return 'https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=400&h=400&fit=crop'; // Vanilla pods
+      return 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400&h=400&fit=crop'; // Amber perfume bottle
     } else if (name.contains('Blue Temptation')) {
-      return 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&h=400&fit=crop'; // Blue ocean/fresh
+      return 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=400&h=400&fit=crop'; // Blue cologne bottle
     } else if (name.contains('Vibrant Leather')) {
-      return 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop'; // Leather texture
+      return 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400&h=400&fit=crop'; // Modern cologne bottle
     } else if (name.contains('Fashionably London')) {
-      return 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop'; // Roses
+      return 'https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=400&h=400&fit=crop'; // Elegant perfume bottle
     } else if (name.contains('Ebony Wood')) {
-      return 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&h=400&fit=crop'; // Dark wood
+      return 'https://images.unsplash.com/photo-1565650722405-a8f32a6c1f9b?w=400&h=400&fit=crop'; // Dark woody perfume
     } else if (name.contains('Tobacco')) {
-      return 'https://images.unsplash.com/photo-1606131731446-db36c988e11a?w=400&h=400&fit=crop'; // Tobacco/warm
+      return 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&h=400&fit=crop'; // Dark luxury bottle
     } else if (name.contains('Sunrise') || name.contains('Red Sun')) {
-      return 'https://images.unsplash.com/photo-1495216875107-c6c043eb703f?w=400&h=400&fit=crop'; // Desert sunset
+      return 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop'; // Luxury perfume collection
     } else if (name.contains('Oud') && name.contains('Leather')) {
-      return 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop'; // Luxury oud
+      return 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400&h=400&fit=crop'; // Niche perfume bottle
     } else if (name.contains('Shahin Gold')) {
-      return 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400&h=400&fit=crop'; // Gold/luxury
+      return 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?w=400&h=400&fit=crop'; // Gold luxury perfume
     } else if (name.contains('Al Qiyam')) {
-      return 'https://images.unsplash.com/photo-1587318043452-0821e9072e52?w=400&h=400&fit=crop'; // Incense smoke
+      return 'https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=400&h=400&fit=crop'; // Arabian perfume bottle
     } else if (name.contains('Night Pool')) {
-      return 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&h=400&fit=crop'; // Dark water/pool
+      return 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop'; // Dark aquatic perfume
     } else {
       // Default perfume bottle image
       return 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop';
