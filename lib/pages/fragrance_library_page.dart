@@ -50,48 +50,106 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: const Color(0xFF0A0A0A),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF1A1A1A),
         elevation: 0,
-        title: Text('My Collection', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    theme.colorScheme.primary,
+                    theme.colorScheme.primary.withValues(alpha: 0.6),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.collections_bookmark_rounded, color: Colors.white, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'My Collection',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.info_outline, color: theme.colorScheme.primary),
-            onPressed: () => _showCollectionStats(context),
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.insights_rounded, color: theme.colorScheme.primary),
+              onPressed: () => _showCollectionStats(context),
+            ),
           ),
         ],
       ),
       body: Column(
         children: [
           Container(
-            color: Colors.white,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  const Color(0xFF1A1A1A),
+                  const Color(0xFF0A0A0A),
+                ],
+              ),
+            ),
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: TextField(
-              onChanged: (value) => setState(() => _searchQuery = value),
-              decoration: InputDecoration(
-                hintText: 'Search fragrances...',
-                prefixIcon: Icon(Icons.search, color: theme.colorScheme.primary),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: theme.dividerColor.withValues(alpha: 0.3)),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF1F1F1F),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                onChanged: (value) => setState(() => _searchQuery = value),
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Search your collection...',
+                  hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
+                  prefixIcon: Icon(Icons.search_rounded, color: theme.colorScheme.primary, size: 22),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear_rounded, color: Colors.white.withValues(alpha: 0.5), size: 20),
+                          onPressed: () => setState(() => _searchQuery = ''),
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: theme.dividerColor.withValues(alpha: 0.3)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: theme.colorScheme.primary, width: 2),
-                ),
-                filled: true,
-                fillColor: const Color(0xFFF5F7FA),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
             ),
           ).animate().fadeIn(duration: 300.ms).slideY(begin: -0.1, end: 0),
           Container(
-            color: Colors.white,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF0A0A0A),
+                  Color(0xFF0A0A0A),
+                ],
+              ),
+            ),
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Row(
               children: [
@@ -109,11 +167,33 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.search_off, size: 80, color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.3)),
-                        const SizedBox(height: 20),
-                        Text('No fragrances found', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.search_off_rounded, 
+                            size: 64, 
+                            color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'No fragrances found',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text('Try adjusting your search or filters', style: theme.textTheme.bodyMedium?.copyWith(color: theme.textTheme.bodySmall?.color)),
+                        Text(
+                          'Try adjusting your search or filters',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: Colors.white.withValues(alpha: 0.5),
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -121,7 +201,7 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                     padding: const EdgeInsets.all(16),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.75,
+                      childAspectRatio: 0.7,
                       crossAxisSpacing: 14,
                       mainAxisSpacing: 14,
                     ),
@@ -129,8 +209,8 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                     itemBuilder: (context, index) {
                       final fragrance = _filteredFragrances[index];
                       return Material(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
+                        color: const Color(0xFF1A1A1A),
+                        borderRadius: BorderRadius.circular(20),
                         elevation: 0,
                         child: InkWell(
                           onTap: () {
@@ -141,16 +221,24 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                               ),
                             );
                           },
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(20),
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: theme.dividerColor.withValues(alpha: 0.2), width: 1),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  const Color(0xFF1A1A1A),
+                                  const Color(0xFF0F0F0F),
+                                ],
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.04),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
+                                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                                  blurRadius: 16,
+                                  offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
@@ -160,61 +248,89 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  height: 90,
+                                  height: 100,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                       colors: [
+                                        theme.colorScheme.primary.withValues(alpha: 0.3),
                                         theme.colorScheme.primary.withValues(alpha: 0.1),
-                                        theme.colorScheme.primary.withValues(alpha: 0.05),
                                       ],
                                     ),
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                                      width: 1,
+                                    ),
                                   ),
                                   child: Center(
                                     child: Text(
                                       fragrance.name[0],
-                                      style: theme.textTheme.displayMedium?.copyWith(
-                                        color: theme.colorScheme.primary,
-                                        fontWeight: FontWeight.bold,
+                                      style: theme.textTheme.displayLarge?.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 48,
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: 14),
                                 Text(
                                   fragrance.name,
                                   style: theme.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                     height: 1.2,
+                                    color: Colors.white,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 6),
                                 Text(
                                   fragrance.brand,
                                   style: theme.textTheme.bodySmall?.copyWith(
-                                    color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                                    color: Colors.white.withValues(alpha: 0.5),
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const Spacer(),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary.withValues(alpha: 0.08),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    fragrance.isBase ? 'Base' : 'Top',
-                                    style: theme.textTheme.labelSmall?.copyWith(
-                                      color: theme.colorScheme.primary,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        theme.colorScheme.primary.withValues(alpha: 0.3),
+                                        theme.colorScheme.primary.withValues(alpha: 0.15),
+                                      ],
                                     ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        fragrance.isBase ? Icons.layers_rounded : Icons.auto_awesome_rounded,
+                                        color: Colors.white,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        fragrance.isBase ? 'Base' : 'Top',
+                                        style: theme.textTheme.labelSmall?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 11,
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -237,27 +353,39 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
     final isSelected = _selectedCategory == category;
     return Expanded(
       child: Material(
-        color: isSelected ? theme.colorScheme.primary : Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: isSelected 
+            ? theme.colorScheme.primary 
+            : const Color(0xFF1F1F1F),
+        borderRadius: BorderRadius.circular(14),
         elevation: 0,
         child: InkWell(
           onTap: () => setState(() => _selectedCategory = category),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(14),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: isSelected ? theme.colorScheme.primary : theme.dividerColor.withValues(alpha: 0.3),
-                width: 1.5,
+                color: isSelected 
+                    ? theme.colorScheme.primary 
+                    : Colors.white.withValues(alpha: 0.1),
+                width: isSelected ? 2 : 1,
               ),
+              boxShadow: isSelected ? [
+                BoxShadow(
+                  color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ] : null,
             ),
             child: Center(
               child: Text(
                 category,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: isSelected ? Colors.white : theme.textTheme.bodyMedium?.color,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                  letterSpacing: 0.5,
                 ),
               ),
             ),
@@ -272,35 +400,68 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: const Color(0xFF1A1A1A),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+        ),
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                  colors: [
+                    theme.colorScheme.primary,
+                    theme.colorScheme.primary.withValues(alpha: 0.6),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Icons.insights, color: theme.colorScheme.primary, size: 24),
+              child: const Icon(Icons.insights_rounded, color: Colors.white, size: 24),
             ),
-            const SizedBox(width: 12),
-            const Text('Collection Stats'),
+            const SizedBox(width: 14),
+            const Text(
+              'Collection Stats',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            ),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildStatRow(theme, Icons.inventory_2, 'Total Fragrances', _allFragrances.length.toString()),
+            _buildStatRow(theme, Icons.inventory_2_rounded, 'Total Fragrances', _allFragrances.length.toString()),
             const SizedBox(height: 12),
-            _buildStatRow(theme, Icons.layers, 'Base Fragrances', _baseFragrances.length.toString()),
+            _buildStatRow(theme, Icons.layers_rounded, 'Base Fragrances', _baseFragrances.length.toString()),
             const SizedBox(height: 12),
-            _buildStatRow(theme, Icons.auto_awesome, 'Top Fragrances', _topFragrances.length.toString()),
+            _buildStatRow(theme, Icons.auto_awesome_rounded, 'Top Fragrances', _topFragrances.length.toString()),
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  theme.colorScheme.primary,
+                  theme.colorScheme.primary.withValues(alpha: 0.8),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: Text(
+                  'Close',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -309,23 +470,45 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
 
   Widget _buildStatRow(ThemeData theme, IconData icon, String label, String value) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F7FA),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF242424),
+            Color(0xFF1A1A1A),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
-          Icon(icon, color: theme.colorScheme.primary, size: 20),
-          const SizedBox(width: 12),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: theme.colorScheme.primary, size: 20),
+          ),
+          const SizedBox(width: 14),
           Expanded(
-            child: Text(label, style: theme.textTheme.bodyMedium),
+            child: Text(
+              label,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.white.withValues(alpha: 0.8),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
           Text(
             value,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.primary,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              fontSize: 24,
             ),
           ),
         ],

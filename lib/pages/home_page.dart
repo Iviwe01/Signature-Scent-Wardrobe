@@ -64,9 +64,9 @@ class _HomePageState extends State<HomePage> {
                           Colors.white.withValues(alpha: 0.95),
                         ]
                       : [
-                          Colors.blue.withValues(alpha: 0.2),
-                          Colors.white.withValues(alpha: 0.85),
-                          Colors.white.withValues(alpha: 0.95),
+                          Colors.black.withValues(alpha: 0.5),
+                          Colors.black.withValues(alpha: 0.75),
+                          Colors.black.withValues(alpha: 0.85),
                         ],
                 ),
               ),
@@ -78,12 +78,18 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: _season == Season.summer ? Colors.white : const Color(0xFF1A1A1A),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: _season == Season.summer 
+                          ? theme.dividerColor.withValues(alpha: 0.3)
+                          : Colors.white.withValues(alpha: 0.15),
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
+                        color: _season == Season.summer
+                            ? Colors.black.withValues(alpha: 0.08)
+                            : Colors.black.withValues(alpha: 0.3),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -97,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'Summer',
                           icon: Icons.wb_sunny_outlined,
                           isSelected: _season == Season.summer,
+                          isDarkTheme: _season == Season.winter,
                           onTap: () => setState(() => _season = Season.summer),
                         ),
                       ),
@@ -106,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'Winter',
                           icon: Icons.ac_unit_outlined,
                           isSelected: _season == Season.winter,
+                          isDarkTheme: _season == Season.winter,
                           onTap: () => setState(() => _season = Season.winter),
                         ),
                       ),
@@ -116,12 +124,18 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   height: 56,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: _season == Season.summer ? Colors.white : const Color(0xFF1A1A1A),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: _season == Season.summer
+                          ? theme.dividerColor.withValues(alpha: 0.3)
+                          : Colors.white.withValues(alpha: 0.15),
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
+                        color: _season == Season.summer
+                            ? Colors.black.withValues(alpha: 0.08)
+                            : Colors.black.withValues(alpha: 0.3),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -176,6 +190,7 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             return _ComboCard(
                               combo: filtered[index],
+                              isDarkTheme: _season == Season.winter,
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -209,20 +224,29 @@ class _SeasonButton extends StatelessWidget {
   final String label;
   final IconData icon;
   final bool isSelected;
+  final bool isDarkTheme;
   final VoidCallback onTap;
 
   const _SeasonButton({
     required this.label,
     required this.icon,
     required this.isSelected,
+    required this.isDarkTheme,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final buttonColor = isSelected 
+        ? theme.colorScheme.primary 
+        : (isDarkTheme ? const Color(0xFF2A2A2A) : Colors.white);
+    final textColor = isSelected 
+        ? theme.colorScheme.onPrimary 
+        : (isDarkTheme ? Colors.white : theme.textTheme.bodyMedium?.color);
+    
     return Material(
-      color: isSelected ? theme.colorScheme.primary : Colors.white,
+      color: buttonColor,
       borderRadius: BorderRadius.circular(12),
       elevation: 0,
       child: InkWell(
@@ -233,19 +257,23 @@ class _SeasonButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected ? theme.colorScheme.primary : theme.dividerColor.withValues(alpha: 0.3),
+              color: isSelected 
+                  ? theme.colorScheme.primary 
+                  : (isDarkTheme 
+                      ? Colors.white.withValues(alpha: 0.15) 
+                      : theme.dividerColor.withValues(alpha: 0.3)),
               width: 1.5,
             ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 20, color: isSelected ? theme.colorScheme.onPrimary : theme.textTheme.bodyMedium?.color),
+              Icon(icon, size: 20, color: textColor),
               const SizedBox(width: 8),
               Text(
                 label,
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: isSelected ? theme.colorScheme.onPrimary : theme.textTheme.bodyMedium?.color,
+                  color: textColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -259,15 +287,23 @@ class _SeasonButton extends StatelessWidget {
 
 class _ComboCard extends StatelessWidget {
   final Combo combo;
+  final bool isDarkTheme;
   final VoidCallback? onTap;
 
-  const _ComboCard({required this.combo, this.onTap});
+  const _ComboCard({
+    required this.combo, 
+    required this.isDarkTheme,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cardColor = isDarkTheme ? const Color(0xFF1A1A1A) : Colors.white;
+    final textColor = isDarkTheme ? Colors.white : theme.textTheme.bodyMedium?.color;
+    
     return Material(
-      color: Colors.white,
+      color: cardColor,
       borderRadius: BorderRadius.circular(12),
       elevation: 0,
       child: InkWell(
@@ -276,7 +312,12 @@ class _ComboCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3), width: 1),
+            border: Border.all(
+              color: isDarkTheme 
+                  ? Colors.white.withValues(alpha: 0.15) 
+                  : theme.dividerColor.withValues(alpha: 0.3), 
+              width: 1,
+            ),
           ),
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -286,7 +327,7 @@ class _ComboCard extends StatelessWidget {
                 width: double.infinity,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.05),
+                  color: theme.colorScheme.primary.withValues(alpha: isDarkTheme ? 0.15 : 0.05),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(child: Text(combo.emoji, style: const TextStyle(fontSize: 40))),
@@ -294,21 +335,30 @@ class _ComboCard extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 combo.title,
-                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600, height: 1.2),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600, 
+                  height: 1.2,
+                  color: textColor,
+                ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 6),
               Text(
                 combo.base.name + ' +',
-                style: theme.textTheme.bodySmall,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: textColor?.withValues(alpha: 0.7),
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 2),
               Text(
                 combo.top.name,
-                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -317,13 +367,13 @@ class _ComboCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                    color: theme.colorScheme.primary.withValues(alpha: isDarkTheme ? 0.2 : 0.08),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     combo.moods.first.toString().split('.').last,
                     style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.primary,
+                      color: isDarkTheme ? Colors.white : theme.colorScheme.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
