@@ -78,9 +78,16 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface.withValues(alpha: 0.95),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.5)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Row(
@@ -107,13 +114,20 @@ class _HomePageState extends State<HomePage> {
                 ).animate().fadeIn(duration: 300.ms).slideY(begin: -0.2, end: 0),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 50,
+                  height: 56,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface.withValues(alpha: 0.95),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.5)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: Mood.values.map((mood) {
@@ -208,17 +222,18 @@ class _SeasonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Material(
-      color: isSelected ? theme.colorScheme.primary : theme.colorScheme.surface,
-      borderRadius: BorderRadius.circular(8),
+      color: isSelected ? theme.colorScheme.primary : Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      elevation: 0,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected ? theme.colorScheme.primary : theme.dividerColor,
+              color: isSelected ? theme.colorScheme.primary : theme.dividerColor.withValues(alpha: 0.3),
               width: 1.5,
             ),
           ),
@@ -252,15 +267,16 @@ class _ComboCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Material(
-      color: theme.colorScheme.surface.withValues(alpha: 0.95),
+      color: Colors.white,
       borderRadius: BorderRadius.circular(12),
+      elevation: 0,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: theme.dividerColor, width: 1),
+            border: Border.all(color: theme.dividerColor.withValues(alpha: 0.3), width: 1),
           ),
           padding: const EdgeInsets.all(12),
           child: Column(
