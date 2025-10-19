@@ -113,6 +113,37 @@ class Fragrance {
   });
 
   String get label => '$brand $name';
+  
+  // Get a unique image URL based on fragrance characteristics
+  String get imageUrl {
+    // Map fragrances to specific themed images from Unsplash
+    if (name.contains('Vanilla')) {
+      return 'https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=400&h=400&fit=crop'; // Vanilla pods
+    } else if (name.contains('Blue Temptation')) {
+      return 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&h=400&fit=crop'; // Blue ocean/fresh
+    } else if (name.contains('Vibrant Leather')) {
+      return 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop'; // Leather texture
+    } else if (name.contains('Fashionably London')) {
+      return 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop'; // Roses
+    } else if (name.contains('Ebony Wood')) {
+      return 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&h=400&fit=crop'; // Dark wood
+    } else if (name.contains('Tobacco')) {
+      return 'https://images.unsplash.com/photo-1606131731446-db36c988e11a?w=400&h=400&fit=crop'; // Tobacco/warm
+    } else if (name.contains('Sunrise') || name.contains('Red Sun')) {
+      return 'https://images.unsplash.com/photo-1495216875107-c6c043eb703f?w=400&h=400&fit=crop'; // Desert sunset
+    } else if (name.contains('Oud') && name.contains('Leather')) {
+      return 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop'; // Luxury oud
+    } else if (name.contains('Shahin Gold')) {
+      return 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400&h=400&fit=crop'; // Gold/luxury
+    } else if (name.contains('Al Qiyam')) {
+      return 'https://images.unsplash.com/photo-1587318043452-0821e9072e52?w=400&h=400&fit=crop'; // Incense smoke
+    } else if (name.contains('Night Pool')) {
+      return 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&h=400&fit=crop'; // Dark water/pool
+    } else {
+      // Default perfume bottle image
+      return 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop';
+    }
+  }
 }
 
 class Combo {

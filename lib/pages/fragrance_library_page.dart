@@ -269,7 +269,7 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                                       fit: StackFit.expand,
                                       children: [
                                         Image.network(
-                                          'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop',
+                                          fragrance.imageUrl,
                                           fit: BoxFit.cover,
                                           errorBuilder: (context, error, stackTrace) => Container(
                                             decoration: BoxDecoration(
