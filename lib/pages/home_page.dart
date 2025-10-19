@@ -59,9 +59,9 @@ class _HomePageState extends State<HomePage> {
                   end: Alignment.bottomCenter,
                   colors: _season == Season.summer
                       ? [
-                          Colors.orange.withValues(alpha: 0.3),
-                          Colors.white.withValues(alpha: 0.85),
-                          Colors.white.withValues(alpha: 0.95),
+                          Colors.black.withValues(alpha: 0.4),
+                          Colors.black.withValues(alpha: 0.7),
+                          Colors.black.withValues(alpha: 0.85),
                         ]
                       : [
                           Colors.black.withValues(alpha: 0.5),
@@ -78,18 +78,14 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   margin: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: _season == Season.summer ? Colors.white : const Color(0xFF1A1A1A),
+                    color: const Color(0xFF1A1A1A),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: _season == Season.summer 
-                          ? theme.dividerColor.withValues(alpha: 0.3)
-                          : Colors.white.withValues(alpha: 0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: _season == Season.summer
-                            ? Colors.black.withValues(alpha: 0.08)
-                            : Colors.black.withValues(alpha: 0.3),
+                        color: Colors.black.withValues(alpha: 0.3),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -103,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'Summer',
                           icon: Icons.wb_sunny_outlined,
                           isSelected: _season == Season.summer,
-                          isDarkTheme: _season == Season.winter,
+                          isDarkTheme: true,
                           onTap: () => setState(() => _season = Season.summer),
                         ),
                       ),
@@ -113,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'Winter',
                           icon: Icons.ac_unit_outlined,
                           isSelected: _season == Season.winter,
-                          isDarkTheme: _season == Season.winter,
+                          isDarkTheme: true,
                           onTap: () => setState(() => _season = Season.winter),
                         ),
                       ),
@@ -124,18 +120,14 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   height: 56,
                   decoration: BoxDecoration(
-                    color: _season == Season.summer ? Colors.white : const Color(0xFF1A1A1A),
+                    color: const Color(0xFF1A1A1A),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: _season == Season.summer
-                          ? theme.dividerColor.withValues(alpha: 0.3)
-                          : Colors.white.withValues(alpha: 0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: _season == Season.summer
-                            ? Colors.black.withValues(alpha: 0.08)
-                            : Colors.black.withValues(alpha: 0.3),
+                        color: Colors.black.withValues(alpha: 0.3),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -190,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             return _ComboCard(
                               combo: filtered[index],
-                              isDarkTheme: _season == Season.winter,
+                              isDarkTheme: true,
                               onTap: () {
                                 Navigator.push(
                                   context,

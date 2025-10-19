@@ -250,28 +250,60 @@ class _FragranceLibraryPageState extends State<FragranceLibraryPage> {
                                   width: double.infinity,
                                   height: 100,
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        theme.colorScheme.primary.withValues(alpha: 0.3),
-                                        theme.colorScheme.primary.withValues(alpha: 0.1),
-                                      ],
-                                    ),
                                     borderRadius: BorderRadius.circular(14),
                                     border: Border.all(
                                       color: theme.colorScheme.primary.withValues(alpha: 0.3),
                                       width: 1,
                                     ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      fragrance.name[0],
-                                      style: theme.textTheme.displayLarge?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 48,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                                        blurRadius: 12,
+                                        offset: const Offset(0, 4),
                                       ),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.network(
+                                          'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&h=400&fit=crop',
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) => Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  theme.colorScheme.primary.withValues(alpha: 0.3),
+                                                  theme.colorScheme.primary.withValues(alpha: 0.1),
+                                                ],
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.science_outlined,
+                                                size: 40,
+                                                color: Colors.white.withValues(alpha: 0.7),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Colors.black.withValues(alpha: 0.1),
+                                                Colors.black.withValues(alpha: 0.4),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
